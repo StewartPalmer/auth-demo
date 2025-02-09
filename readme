@@ -1,0 +1,57 @@
+1. First, you need to register two applications in Azure AD:
+
+   a. For the React application:
+   - Go to Azure Portal > Azure Active Directory > App registrations
+   - Click "New registration"
+   - Name: "Auth Demo Client"
+   - Supported account types: "Accounts in this organizational directory only"
+   - Redirect URI: "Single-page application (SPA)" with value "http://localhost:5173"
+   - After creation, note down the "Application (client) ID" and "Directory (tenant) ID"
+
+   b. For the API:
+   - Create another app registration
+   - Name: "Auth Demo API"
+   - Supported account types: "Accounts in this organizational directory only"
+   - No redirect URI needed
+   - After creation, note down the "Application (client) ID"
+   - Go to "Expose an API"
+   - Click "Add a scope"
+   - Set scope name as "access_as_user"
+   - Set admin consent display name and description
+   - Set user consent display name and description
+   - State: "Enabled"
+
+2. Configure API permissions for the React application:
+   - In the React app registration
+   - Go to "API permissions"
+   - Click "Add a permission"
+   - Select "My APIs"
+   - Select your API application
+   - Select the "access_as_user" scope
+   - Grant admin consent
+
+3. Update the configuration files:
+
+   a. In `client/src/authConfig.ts`:
+   - Replace `your-client-id` with the React app's client ID
+   - Replace `your-tenant-id` with your tenant ID
+   - Replace `your-api-client-id` with the API's client ID
+
+   b. In `api/appsettings.json`:
+   - Replace `your-domain.onmicrosoft.com` with your Azure AD domain
+   - Replace `your-tenant-id` with your tenant ID
+   - Replace `your-api-client-id` with the API's client ID
+
+4. Start both applications:
+
+   For the API:
+   ```powershell
+   cd api
+   dotnet run
+   ```
+
+   For the React app:
+   ```powershell
+   cd client
+   npm run dev
+   ```
